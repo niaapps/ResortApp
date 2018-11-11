@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Resort App</string>
+    <string name="earn">Earn Points</string>
+    <string name="rewards">My Rewards</string>
+    <string name="discounts">My Discounts</string>
+    <string name="msgs">Messages</string>
+    <string name="totalpts">Total Points:</string>
+    <string name="enter">Enter Message...</string>
+    <string name="send">Send Button</string>
+</resources>

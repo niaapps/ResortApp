@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "673999916150",
+    "firebase_url": "https://diamond-resorts-9faf0.firebaseio.com",
+    "project_id": "diamond-resorts-9faf0",
+    "storage_bucket": "diamond-resorts-9faf0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:673999916150:android:db675e49388b0b93",
+        "android_client_info": {
+          "package_name": "com.niaapplications.resortapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "673999916150-alqc5muh8c1lrfi3n062nsa7te8o3jef.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.niaapplications.resortapp",
+            "certificate_hash": "071a691b155a1ec746ae432321982e04f8f69df3"
+          }
+        },
+        {
+          "client_id": "673999916150-fc310hgto4etqn4ledplqc03dg565cv1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCB2IU2M6OVC1MPYei78yVC0zXvX5D_Thg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "673999916150-fc310hgto4etqn4ledplqc03dg565cv1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "673999916150-opqnlc3906f4c93fok2005t5erthhkfs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mobileappcompany.diamondresortsbackend"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
