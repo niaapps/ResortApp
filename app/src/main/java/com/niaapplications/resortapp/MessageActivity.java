@@ -64,7 +64,12 @@ public class MessageActivity extends AppCompatActivity {
         rView.setHasFixedSize(true);
 
         rView.setAdapter(adapter);
-       ref = FirebaseDatabase.getInstance().getReference("conversations");
+
+        convo.getFromId();
+        convo.setContent(typedMessage.toString());
+
+        ref = FirebaseDatabase.getInstance().getReference("conversations");
+
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,8 +87,8 @@ public class MessageActivity extends AppCompatActivity {
 
             typedMessage.setText("");
 
-           ref.child("conversations").child("isRead").setValue(true);
-           ref.child("conversations").child("timestamp").setValue(ServerValue.TIMESTAMP);
+           ref.child("isRead").setValue(true);
+           ref.child("timestamp").setValue(ServerValue.TIMESTAMP);
 
 
         }

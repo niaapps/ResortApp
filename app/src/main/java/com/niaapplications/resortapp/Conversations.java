@@ -1,10 +1,14 @@
 package com.niaapplications.resortapp;
 
+import android.support.annotation.NonNull;
+
 import java.util.Random;
 
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Conversations {
     private  String content;
@@ -15,6 +19,7 @@ public class Conversations {
     private  String toId = "bfNsg3w507WaKUNDYra35RmEf2j2";
     private  String type = "text";
     DatabaseReference reference;
+    boolean result = true;
 
 public Conversations(){
     this.content = content;
@@ -38,6 +43,9 @@ public Conversations(){
     public String getFromId() {
         String m = makeIdString();
         if(validId(m) == true) {
+            return m;
+        }else{
+            getFromId();
             return m;
         }
     }
@@ -97,9 +105,30 @@ public Conversations(){
         return str;
 
     }
-    protected  boolean validId(String id){
-            reference = FirebaseDatabase.getInstance().getReference("conversations");
-        //TODO: datasnapshot then create recursion of valid string, once valid return true;
+    protected  boolean validId( String id){
+            final String tempId = id;
+
+            reference = FirebaseDatabase.getInstance().getReference("conversations").child("fromId");
+            reference.addValueEventListener(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    String newId;
+                    for (DataSnapshot fromIdSnap : dataSnapshot.getChildren()) {
+                        if(fromIdSnap.toString() == tempId) {
+
+                            result = false;
+                        }
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+            return result;
 
     }
 }
