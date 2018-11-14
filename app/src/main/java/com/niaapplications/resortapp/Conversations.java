@@ -1,14 +1,8 @@
 package com.niaapplications.resortapp;
 
-import android.support.annotation.NonNull;
 
-import java.util.Random;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
 
 public class Conversations {
     private  String content;
@@ -25,7 +19,7 @@ public Conversations(){
 
 }
 
-    public Conversations(String content, String fromId, boolean isRead, Long timestamp, String toId, String type){
+    public Conversations(String content, String fromId, boolean isRead, long timestamp, String toId, String type){
     this.content = content;
     this.fromId = fromId;
     this.isRead = isRead;
@@ -51,12 +45,12 @@ public Conversations(){
         this.fromId = fromId;
     }
 
-    public boolean isRead() {
+    public boolean getIsRead() {
         return isRead;
     }
 
-    public void setRead(boolean read) {
-        isRead = read;
+    public void setIsRead(boolean isRead) {
+        isRead = isRead;
     }
 
     public long getTimestamp() {

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -22,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,14 +39,14 @@ public class MessageActivity extends AppCompatActivity {
 
     ImageButton send;
     EditText typedMessage;
-
+    String  from;
     LinearLayoutManager layoutManager;
     RecyclerView rView;
-//    Conversations convo;
+    Conversations convo;
     DatabaseReference ref;
     boolean result = true;
     SwipeRefreshLayout swipeRefreshLayout;
-    String currentUserId;
+
 
 
     private final List<Conversations> messagesList = new ArrayList<>();
@@ -52,24 +54,28 @@ public class MessageActivity extends AppCompatActivity {
 
 
 
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_msg);
 
-       swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.message_swipe_layout);
-//        Conversations convo = new Conversations();
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.message_swipe_layout);
+        convo = new Conversations();
         send = (ImageButton) findViewById(R.id.chat_send_btn);
         typedMessage = (EditText) findViewById(R.id.chat_message_view);
         rView = (RecyclerView) findViewById(R.id.messages_list);
         layoutManager = new LinearLayoutManager(this);
         adapter = new MessageAdapter(messagesList);
-
+        convo.setFromId(from=finalId());
         layoutManager.setReverseLayout(true);
         rView.setLayoutManager(layoutManager);
         rView.setHasFixedSize(true);
 
         rView.setAdapter(adapter);
 
+
+
+        loadMessages();
         ref = FirebaseDatabase.getInstance().getReference("conversations").child("-LPNCOSB-guOYWCHOFyA");
 
 
@@ -77,18 +83,18 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 newConversation();
-//                sendMessage();
+
+              sendMessage();
             }
         });
     }
 
     private void newConversation(){
-            String to, from,type;
+            String to,type;
             boolean initRead = false;
             to = "bfNsg3w507WaKUNDYra35RmEf2j2";
-            from = finalId();
             type = "text";
-
+            from = finalId();
             long time;
             String msg = typedMessage.getText().toString();
             time = System.currentTimeMillis()/1000;
@@ -107,23 +113,44 @@ public class MessageActivity extends AppCompatActivity {
 
     }
 
-//    private void sendMessage() {
-//
-//
-//        String message = typedMessage.getText().toString();
-//
-//        if(!TextUtils.isEmpty(message)){
-//
-//            typedMessage.setText("");
-//
-//
-////           ref.child("isRead").setValue(true);
-////           ref.child("timestamp").setValue(ServerValue.TIMESTAMP);
-//
-//
-//        }
-//
-//    }
+
+    private void loadMessages(){
+
+            DatabaseReference refContent = FirebaseDatabase.getInstance().getReference("conversations").child("-LPNCOSB-guOYWCHOFyA").child("content");
+
+        if((refContent.child("fromId").toString().equals("bfNsg3w507WaKUNDYra35RmEf2j2"))&& (refContent.child("toId").toString().equals(convo.getId()))){
+
+            refContent.addValueEventListener(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange (@NonNull DataSnapshot dataSnapshot){
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
+                        Conversations conversations = snapshot.getValue(Conversations.class);
+                        messagesList.add(conversations);
+                        adapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });  }
+        }
+
+    private void sendMessage() {
+
+        String message = typedMessage.getText().toString();
+
+        if(!TextUtils.isEmpty(message)){
+
+            typedMessage.setText("");
+        }
+        convo.setIsRead(true);
+        convo.setTimestamp(System.currentTimeMillis()/1000);
+    }
 
     public  String finalId() {
         String m = makeIdString();
@@ -134,6 +161,7 @@ public class MessageActivity extends AppCompatActivity {
             return m;
         }
     }
+
 
     protected String makeIdString() {
         String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwzyz1234567890";
