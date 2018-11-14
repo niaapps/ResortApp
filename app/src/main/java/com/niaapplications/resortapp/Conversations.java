@@ -19,16 +19,19 @@ public class Conversations {
     private  String toId = "bfNsg3w507WaKUNDYra35RmEf2j2";
     private  String type = "text";
     DatabaseReference reference;
-    boolean result = true;
+
 
 public Conversations(){
+
+}
+
+    public Conversations(String content, String fromId, boolean isRead, Long timestamp, String toId, String type){
     this.content = content;
     this.fromId = fromId;
     this.isRead = isRead;
     this.timestamp = timestamp;
     this.toId = toId;
     this.type = type;
-    this.id = fromId;
 }
 
 
@@ -41,13 +44,7 @@ public Conversations(){
     }
 
     public String getFromId() {
-        String m = makeIdString();
-        if(validId(m) == true) {
-            return m;
-        }else{
-            getFromId();
-            return m;
-        }
+        return  fromId;
     }
 
     public void setFromId(String fromId) {
@@ -93,42 +90,6 @@ public Conversations(){
     public void setId(String id) {
         this.id = fromId;
     }
-    protected String makeIdString() {
-        String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwzyz1234567890";
-        StringBuilder id = new StringBuilder();
-        Random rnd = new Random();
-        while (id.length() < 29) { // length of the random string.
-            int index = (int) (rnd.nextFloat() * CHARS.length());
-            id.append(CHARS.charAt(index));
-        }
-        String str = id.toString();
-        return str;
 
-    }
-    protected  boolean validId( String id){
-            final String tempId = id;
 
-            reference = FirebaseDatabase.getInstance().getReference("conversations").child("fromId");
-            reference.addValueEventListener(new ValueEventListener() {
-
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    String newId;
-                    for (DataSnapshot fromIdSnap : dataSnapshot.getChildren()) {
-                        if(fromIdSnap.toString() == tempId) {
-
-                            result = false;
-                        }
-
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-            return result;
-
-    }
 }
