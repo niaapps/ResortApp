@@ -12,7 +12,7 @@ public class Discount {
     private  String location;
     private  String webURL;
     private  String pictureURL;
-    public  Drawable image;
+
 
 
 
@@ -24,7 +24,7 @@ public class Discount {
         this.location = location;
         this.webURL=webURL;
         this.pictureURL=pictureURL;
-        image =   drawableFromURL(pictureURL);
+
     }
 
     public String getLocation() {
@@ -72,13 +72,5 @@ public class Discount {
     }
 
 
-    public static Drawable drawableFromURL(String url) {
-        try {
-            InputStream is = (InputStream) new URL(url).getContent();
-            Drawable d = Drawable.createFromStream(is, "src name");
-            return d;
-        } catch (Exception e) {
-            return null;
-        }
-    }
+
 }
