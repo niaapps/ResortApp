@@ -6,11 +6,10 @@ import com.google.firebase.database.DatabaseReference;
 
 public class Conversations {
     private  String content;
-    private  String fromId;
+    private  String fromID;
     private  boolean isRead = false;
     private  long timestamp;
-    private  String id;
-    private  String toId = "bfNsg3w507WaKUNDYra35RmEf2j2";
+    private  String toID = "bfNsg3w507WaKUNDYra35RmEf2j2";
     private  String type = "text";
     DatabaseReference reference;
 
@@ -19,12 +18,12 @@ public Conversations(){
 
 }
 
-    public Conversations(String content, String fromId, boolean isRead, long timestamp, String toId, String type){
+    public Conversations(String content, String fromID, boolean isRead, long timestamp, String toID, String type){
     this.content = content;
-    this.fromId = fromId;
+    this.fromID = fromID;
     this.isRead = isRead;
     this.timestamp = timestamp;
-    this.toId = toId;
+    this.toID = toID;
     this.type = type;
 }
 
@@ -37,12 +36,12 @@ public Conversations(){
         this.content = content;
     }
 
-    public String getFromId() {
-        return  fromId;
+    public String getFromID() {
+        return  fromID;
     }
 
-    public void setFromId(String fromId) {
-        this.fromId = fromId;
+    public void setFromID(String fromID) {
+        this.fromID = fromID;
     }
 
     public boolean getIsRead() {
@@ -61,12 +60,12 @@ public Conversations(){
         this.timestamp = timestamp;
     }
 
-    public String getToId() {
-        return toId;
+    public String getToID() {
+        return toID;
     }
 
-    public void setToId(String toId) {
-        this.toId = toId;
+    public void setToID(String toID) {
+        this.toID = toID;
     }
 
     public String getType() {
@@ -75,14 +74,6 @@ public Conversations(){
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getId() {
-        return fromId;
-    }
-
-    public void setId(String id) {
-        this.id = fromId;
     }
 
 

@@ -56,6 +56,9 @@ public class DiscountActivity extends AppCompatActivity {
                     discountList.add(discountObj);
 
                 }
+                DiscountList discountAdapter = new DiscountList(DiscountActivity.this, discountList);
+                //attaching adapter to the listview
+                listViewDiscount.setAdapter(discountAdapter);
             }
 
 

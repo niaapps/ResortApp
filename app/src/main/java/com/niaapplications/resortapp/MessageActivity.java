@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.app.Activity;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -64,13 +65,14 @@ public class MessageActivity extends AppCompatActivity {
         send = (ImageButton) findViewById(R.id.chat_send_btn);
         typedMessage = (EditText) findViewById(R.id.chat_message_view);
         rView = (RecyclerView) findViewById(R.id.messages_list);
+
         layoutManager = new LinearLayoutManager(this);
         adapter = new MessageAdapter(messagesList);
-        convo.setFromId(from=finalId());
+        convo.setFromID(from=finalId());
         layoutManager.setReverseLayout(true);
         rView.setLayoutManager(layoutManager);
         rView.setHasFixedSize(true);
-
+        rView.setItemAnimator(new DefaultItemAnimator());
         rView.setAdapter(adapter);
 
 
@@ -118,7 +120,7 @@ public class MessageActivity extends AppCompatActivity {
 
             DatabaseReference refContent = FirebaseDatabase.getInstance().getReference("conversations").child("-LPNCOSB-guOYWCHOFyA").child("content");
 
-        if((refContent.child("fromId").toString().equals("bfNsg3w507WaKUNDYra35RmEf2j2"))&& (refContent.child("toId").toString().equals(convo.getId()))){
+        if((refContent.child("fromID").toString().equals("bfNsg3w507WaKUNDYra35RmEf2j2"))&& (refContent.child("toID").toString().equals(convo.getFromID()))){
 
             refContent.addValueEventListener(new ValueEventListener() {
 
